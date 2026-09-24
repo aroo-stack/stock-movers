@@ -1,0 +1,123 @@
+date,base_trading_day,type,detail,next_day_return,three_day_return
+2026-10-21,,Earnings,earnings announcement,,
+2026-07-22,2026-07-22,Earnings,EPS 0.33 (surprise -39.1%),-0.145237,-0.173231
+2026-04-22,2026-04-22,Earnings,EPS 0.41 (surprise +17.1%),-0.035586,-0.022812
+2026-01-28,2026-01-28,Earnings,EPS 0.50 (surprise +11.0%),-0.034534,-0.022366
+2025-10-22,2025-10-22,Earnings,EPS 0.50 (surprise -10.5%),0.022803,0.030640
+2025-07-23,2025-07-23,Earnings,EPS 0.40 (surprise -1.1%),-0.081970,-0.020959
+2025-04-22,2025-04-22,Earnings,EPS 0.27 (surprise -34.9%),0.053662,0.197420
+2025-01-29,2025-01-29,Earnings,EPS 0.73 (surprise -5.1%),0.028733,-0.013930
+2024-10-23,2024-10-23,Earnings,EPS 0.72 (surprise +20.5%),0.219190,0.228692
+2024-07-23,,Earnings,EPS 0.52 (surprise -16.1%),,
+2024-04-23,,Earnings,EPS 0.45 (surprise -8.1%),,
+2024-01-24,,Earnings,EPS 0.71 (surprise -3.5%),,
+2023-10-18,,Earnings,EPS 0.66 (surprise -9.8%),,
+2023-07-19,,Earnings,EPS 0.91 (surprise +11.1%),,
+2023-04-19,,Earnings,EPS 0.85 (surprise -0.4%),,
+2023-01-25,,Earnings,EPS 1.19 (surprise +7.2%),,
+2022-10-19,,Earnings,EPS 1.05 (surprise +5.2%),,
+2022-07-20,,Earnings,EPS 0.76 (surprise +26.9%),,
+2022-04-20,,Earnings,EPS 1.07 (surprise +42.3%),,
+2022-01-26,,Earnings,EPS 0.85 (surprise +6.9%),,
+2021-10-20,,Earnings,EPS 0.62 (surprise +15.2%),,
+2021-07-26,,Earnings,EPS 0.48 (surprise +49.9%),,
+2021-04-26,,Earnings,EPS 0.31 (surprise +19.4%),,
+2021-01-27,,Earnings,EPS 0.27 (surprise -23.9%),,
+2020-10-21,,Earnings,EPS 0.25 (surprise +25.8%),,
+2026-09-21,2026-09-21,News,Elon Musk wants to live on Mars: Maye Musk on her son's ambitions,,
+2026-09-21,2026-09-21,News,Tesla stock jumps ahead of highly anticipated Roadster event,,
+2026-09-21,2026-09-21,News,TSLA Stock Hits Nearly 3-Week High: Nvidia Win Adds Muscle To ‘Physical AI’ Pivot Despite Optimus Delays,,
+2026-09-21,2026-09-21,News,Robotaxis crash less. So why isn't your insurance cheaper?,,
+2026-09-21,2026-09-21,News,Tesla Audits Chinese Suppliers as Elon Musk’s Optimus Robot Moves Closer to Mass Production: Report,,
+2026-09-21,2026-09-21,News,Tesla Gains 3% as Fremont Bias Claims Reach Trial,,
+2026-09-21,2026-09-21,News,Tesla Stock Rises After Major Self-Driving Win in Europe,,
+2026-09-21,2026-09-21,News,Tesla’s Roadster Is 1 Reason Why October Could Be a Different Story for the Stock,,
+2026-09-21,2026-09-21,News,Tesla Heads Into High-Stakes California Court Fight,,
+2026-09-21,2026-09-21,News,Tesla Opens Roadster Preorders; More SpaceX Merger Talks Surface,,
+2026-09-21,2026-09-21,News,Founder of Witherite Law Group Amy Witherite Warns 19 Different State-Filed Response Plans for Autonomous Vehicles Shows,,
+2026-09-21,2026-09-21,News,Maye Musk: Elon really wants to live on Mars in the coming decades,,
+2026-09-21,2026-09-21,News,"TSLA, RUN Stocks In Focus — 580 MW Heat-Wave Battery Drop Lifts Tesla And Sunrun Despite 2026 Losses",,
+2026-09-21,2026-09-21,News,Hugging Face Proves These Two AI Hyperscalers Were Best Protected Against AI Threats,,
+2026-09-21,2026-09-21,News,Did Elon Musk Just Drop a Big Hint About a Possible SpaceX-Tesla Merger?,,
+2026-09-21,2026-09-21,News,What Could A Space Exploration Technologies (SPCX) Merger Mean For Investors?,,
+2026-09-21,2026-09-21,News,Uber faces growing AV competition but BofA sees limited market share erosion,,
+2026-09-21,2026-09-21,News,Elon Musk Puts Boring Company to Biggest Test Yet,,
+2026-09-21,2026-09-21,News,TSLA Stock Hits Nearly 3-Week High: Nvidia Win Adds Muscle To Physical AI Pivot Despite Optimus Delays,,
+2026-09-22,,News,Tesla Gains 3% as Fremont Bias Claims Reach Trial,,
+2026-09-22,,News,"Elon Musk, Jensen Huang and Tim Cook are set to dine this week with Xi. Here's what their companies want from China.",,
+2026-09-22,,News,Maye Musk: Elon really wants to live on Mars in the coming decades,,
+2026-09-22,,News,Tesla Stock Rises After Major Self-Driving Win in Europe,,
+2026-09-22,,News,Tesla Heads Into High-Stakes California Court Fight,,
+2026-09-22,,News,"TSLA, RUN Stocks In Focus 580 MW Heat-Wave Battery Drop Lifts Tesla And Sunrun Despite 2026 Losses",,
+2026-09-22,,News,Uber faces growing AV competition but BofA sees limited market share erosion,,
+2026-09-22,,News,"'Magnificent Seven' are killing it, as the combined market cap has broken records",,
+2026-09-22,,News,Tesla Opens Roadster Preorders; More SpaceX Merger Talks Surface,,
+2026-09-22,,News,Tesla stock jumps ahead of highly anticipated Roadster event,,
+2026-09-22,,News,Elon Musk Puts Boring Company to Biggest Test Yet,,
+2026-09-22,,News,"Tesla Optimus sales revenue unlikely before 2029, Oppenheimer says",,
+2026-09-22,,News,"Large cryptocurrencies climb on Sui, Cardano increases",,
+2026-09-22,,News,"Tech stocks rise, Bitcoin rallies as Treasury yields ease: AlphaCheck",,
+2026-09-22,,News,"Tech stocks rise, Bitcoin rallied as Treasury yields ease: AlphaCheck",,
+2026-09-22,,News,Should You Pay Up For Tesla's Narrow Lead Over Its Peers?,,
+2026-09-22,,News,Musk Has a New Route for Texas and It's Underground,,
+2026-09-22,,News,CATL develops US-specific battery despite trade restrictions report,,
+2026-09-22,,News,Tesla's Roadster Is 1 Reason Why October Could Be a Different Story for the Stock,,
+2026-09-22,,News,Morgan Stanley Highlights Growing AI Collaboration Between SpaceX and Tesla,,
+2026-09-22,,News,"Tesla faces major trial for alleged bias against Black workers, after years of lawsuits",,
+2024-10-01,2024-10-01,Fed funds rate,rate 4.83% (-0.30 pct pts mo/mo),-0.034881,-0.030773
+2024-11-01,2024-11-01,Fed funds rate,rate 4.64% (-0.19 pct pts mo/mo),-0.024661,0.158848
+2024-12-01,2024-11-29,Fed funds rate,rate 4.48% (-0.16 pct pts mo/mo),0.034564,0.036997
+2025-01-01,2024-12-31,Fed funds rate,rate 4.33% (-0.15 pct pts mo/mo),-0.060816,0.017854
+2025-09-01,2025-08-29,Fed funds rate,rate 4.22% (-0.11 pct pts mo/mo),-0.013508,0.013958
+2025-10-01,2025-10-01,Fed funds rate,rate 4.09% (-0.13 pct pts mo/mo),-0.051060,-0.013516
+2025-11-01,2025-10-31,Fed funds rate,rate 3.88% (-0.21 pct pts mo/mo),0.025867,0.012069
+2025-12-01,2025-12-01,Fed funds rate,rate 3.72% (-0.16 pct pts mo/mo),-0.002092,0.056702
+2026-01-01,2025-12-31,Fed funds rate,rate 3.64% (-0.08 pct pts mo/mo),-0.025905,-0.037268
+2026-05-01,2026-05-01,Fed funds rate,rate 3.63% (-0.01 pct pts mo/mo),0.004324,0.020240
+2024-10-10,2024-10-10,CPI (inflation),CPI index 314.7 (+0.21% mo/mo),-0.087825,-0.080412
+2024-11-11,2024-11-11,CPI (inflation),CPI index 315.6 (+0.29% mo/mo),-0.061457,-0.110914
+2024-12-10,2024-12-10,CPI (inflation),CPI index 316.5 (+0.28% mo/mo),0.059303,0.087883
+2025-01-10,2025-01-10,CPI (inflation),CPI index 317.6 (+0.34% mo/mo),0.021711,0.084815
+2025-02-10,2025-02-10,CPI (inflation),CPI index 319.0 (+0.43% mo/mo),-0.063382,0.014855
+2025-03-10,2025-03-10,CPI (inflation),CPI index 319.7 (+0.23% mo/mo),0.037947,0.083412
+2025-04-10,2025-04-10,CPI (inflation),CPI index 319.8 (+0.03% mo/mo),-0.000357,0.006775
+2025-05-12,2025-05-12,CPI (inflation),CPI index 320.3 (+0.16% mo/mo),0.049281,0.076764
+2025-06-10,2025-06-10,CPI (inflation),CPI index 320.6 (+0.10% mo/mo),0.001043,-0.002392
+2025-07-10,2025-07-10,CPI (inflation),CPI index 321.4 (+0.25% mo/mo),0.011747,0.002937
+2025-08-11,2025-08-11,CPI (inflation),CPI index 322.2 (+0.23% mo/mo),0.005339,-0.010176
+2025-09-10,2025-09-10,CPI (inflation),CPI index 323.3 (+0.35% mo/mo),0.060439,0.178987
+2025-10-10,2025-10-10,CPI (inflation),CPI index 324.2 (+0.30% mo/mo),0.054197,0.052383
+2025-12-10,2025-12-10,CPI (inflation),CPI index 325.1 (+0.25% mo/mo),-0.010101,0.052852
+2026-01-12,2026-01-12,CPI (inflation),CPI index 326.0 (+0.30% mo/mo),-0.003920,-0.023142
+2026-02-10,2026-02-10,CPI (inflation),CPI index 326.6 (+0.17% mo/mo),0.007196,-0.018273
+2026-03-10,2026-03-10,CPI (inflation),CPI index 327.5 (+0.27% mo/mo),0.021491,-0.020138
+2026-04-10,2026-04-10,CPI (inflation),CPI index 330.3 (+0.87% mo/mo),0.009944,0.123227
+2026-05-11,2026-05-11,CPI (inflation),CPI index 332.4 (+0.64% mo/mo),-0.025955,-0.003820
+2026-06-10,2026-06-10,CPI (inflation),CPI index 334.0 (+0.47% mo/mo),0.046018,0.077465
+2026-07-10,2026-07-10,CPI (inflation),CPI index 332.6 (-0.42% mo/mo),-0.031881,-0.032617
+2026-08-10,2026-08-10,CPI (inflation),CPI index 332.8 (+0.07% mo/mo),0.005833,0.027442
+2026-09-10,2026-09-10,CPI (inflation),CPI index 334.1 (+0.40% mo/mo),0.005171,-0.019199
+2024-10-04,2024-10-04,Jobs report,jobs 157.9M (+155k mo/mo),-0.036988,-0.036108
+2024-11-01,2024-11-01,Jobs report,jobs 157.9M (+33k mo/mo),-0.024661,0.158848
+2024-12-06,2024-12-06,Jobs report,jobs 158.1M (+134k mo/mo),0.001464,0.091336
+2025-01-03,2025-01-03,Jobs report,jobs 158.3M (+237k mo/mo),0.001486,-0.037764
+2025-02-07,2025-02-07,Jobs report,jobs 158.3M (-48k mo/mo),-0.030114,-0.069437
+2025-03-07,2025-03-07,Jobs report,jobs 158.3M (+42k mo/mo),-0.154262,-0.055507
+2025-04-04,2025-04-04,Jobs report,jobs 158.4M (+67k mo/mo),-0.025644,0.136867
+2025-05-02,2025-05-02,Jobs report,jobs 158.5M (+108k mo/mo),-0.024198,-0.038265
+2025-06-06,2025-06-06,Jobs report,jobs 158.5M (+13k mo/mo),0.045538,0.106017
+2025-07-04,2025-07-03,Jobs report,jobs 158.5M (-20k mo/mo),-0.067893,-0.061741
+2025-08-01,2025-08-01,Jobs report,jobs 158.5M (+64k mo/mo),0.021908,0.057099
+2025-09-05,2025-09-05,Jobs report,jobs 158.5M (-70k mo/mo),-0.012655,-0.008693
+2025-10-03,2025-10-03,Jobs report,jobs 158.5M (+76k mo/mo),0.054487,0.020613
+2025-11-07,2025-11-07,Jobs report,jobs 158.4M (-140k mo/mo),0.036576,0.002514
+2025-12-05,2025-12-05,Jobs report,jobs 158.4M (+41k mo/mo),-0.033890,-0.007802
+2026-01-02,2026-01-02,Jobs report,jobs 158.4M (-17k mo/mo),0.031045,-0.015203
+2026-02-06,2026-02-06,Jobs report,jobs 158.6M (+160k mo/mo),0.015106,0.041741
+2026-03-06,2026-03-06,Jobs report,jobs 158.4M (-156k mo/mo),0.004915,0.027954
+2026-04-03,2026-04-02,Jobs report,jobs 158.7M (+214k mo/mo),-0.021548,-0.048088
+2026-05-01,2026-05-01,Jobs report,jobs 158.8M (+148k mo/mo),0.004324,0.020240
+2026-06-05,2026-06-05,Jobs report,jobs 158.9M (+63k mo/mo),0.045908,-0.024067
+2026-07-03,2026-07-02,Jobs report,jobs 158.9M (+31k mo/mo),0.066895,0.001550
+2026-08-07,2026-08-07,Jobs report,jobs 158.9M (+21k mo/mo),0.007000,-0.003256
+2026-09-04,2026-09-04,Jobs report,jobs 159.1M (+162k mo/mo),0.039765,0.026774

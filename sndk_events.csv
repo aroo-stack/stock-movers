@@ -1,0 +1,91 @@
+date,base_trading_day,type,detail,next_day_return,three_day_return
+2026-11-06,,Earnings,earnings announcement,,
+2026-08-05,2026-08-05,Earnings,EPS 39.25 (surprise +13.7%),-0.068064,-0.083362
+2026-04-30,2026-04-30,Earnings,EPS 23.41 (surprise +59.7%),0.082525,0.282542
+2026-01-29,2026-01-29,Earnings,EPS 6.20 (surprise +75.0%),0.068515,0.289653
+2025-11-06,2025-11-06,Earnings,EPS 1.22 (surprise +36.9%),0.153065,0.307622
+2025-08-14,2025-08-14,Earnings,EPS 0.29 (surprise +771.1%),-0.045844,-0.044987
+2025-05-07,2025-05-07,Earnings,EPS -0.30 (surprise +22.4%),0.048327,0.180154
+2026-09-21,2026-09-21,News,Sandisk has $93.9 billion in deals: Now comes the hard part,,
+2026-09-21,2026-09-21,News,"Dow Jones Futures: Falling Oil Prices, Yields Spark Market Rally; AMD, Intel, Micron, Nvidia, Sandisk Are Key Movers",,
+2026-09-21,2026-09-21,News,"Top Stock Reports for Procter & Gamble, Sandisk & Analog Devices",,
+2026-09-21,2026-09-21,News,"SanDisk Faces a Make-or-Break Test at $1,832",,
+2026-09-21,2026-09-21,News,"SanDisk Falls 2% Despite Memory Rally; Micron Advances 3%, Western Digital Nudges Higher",,
+2026-09-21,2026-09-21,News,Should You Buy Sandisk Stock Now or Wait for a Dip?,,
+2026-09-20,2026-09-18,News,"Dow Jones Futures Rise; Can The Market Take Flight? Robinhood, Sandisk, AMD, Moderna Surge Into Buy Areas",-0.014053,
+2026-09-20,2026-09-18,News,"GMIF 2026 Speakers Unveiled: Samsung, Sandisk, Solidigm and More on the Lineup",-0.014053,
+2026-09-20,2026-09-18,News,SanDisk Stock Jumped 11% on S&P 100 News. Here’s What the Street Says.,-0.014053,
+2026-09-19,2026-09-18,News,Sandisk Joins the S&P 100 on Monday -- the Same Day Nike Leaves It,-0.014053,
+2026-09-21,2026-09-21,News,Tech Retakes Lead Heading into Q4: Stocks to Watch,,
+2026-09-21,2026-09-21,News,Veeco Instruments (VECO): Results Far Exceed Expectations Amid Memory Capacity Boom,,
+2026-09-21,2026-09-21,News,"Stock Market Today: Dow Up, Nasdaq Roars To Record As Micron Does This; AMD Hits New High",,
+2026-09-21,2026-09-21,News,SanDisk Corp’s (SNDK) Impact on Small/Mid Cap Returns,,
+2026-09-21,2026-09-21,News,This Strategy Sees Value in Methanex (MEOH) Despite a Near-Term Cash Flow Pullback,,
+2026-09-21,2026-09-21,News,Here’s Why This Strategy Decided to Exit Charles River Laboratories (CRL),,
+2026-09-21,2026-09-21,News,Coinbase Stock Jumped 12% Last Friday. Bitcoin’s Breakout Wasn’t the Only Reason.,,
+2026-09-20,2026-09-18,News,3 Bullish Setups for the Week Ahead,-0.014053,
+2026-09-20,2026-09-18,News,3 AI Infrastructure Stocks Riding The White House Push Into Data Centers,-0.014053,
+2026-09-19,2026-09-18,News,Unpacking the Stock Market's Coiled Spring Set Up,-0.014053,
+2026-09-21,2026-09-21,News,"Top Stock Reports for Procter &amp; Gamble, Sandisk &amp; Analog Devices",,
+2026-09-22,,News,"SanDisk Faces a Make-or-Break Test at $1,832",,
+2026-09-22,,News,Tech Retakes Lead Heading into Q4: Stocks to Watch,,
+2026-09-22,,News,Coinbase Stock Jumped 12% Last Friday. Bitcoins Breakout Wasnt the Only Reason.,,
+2026-09-20,2026-09-18,News,"Weekly news roundup: AI boom strains chips; Google's TPUs pay off, China eyes 3nm without EUV",-0.014053,
+2026-09-22,,News,3 Bullish Setups for the Week Ahead,,
+2026-09-22,,News,SanDisk Stock Jumped 11% on S&amp;P 100 News. Heres What the Street Says.,,
+2026-09-18,2026-09-18,News,"Micron, SanDisk Face New China Rival: Trouble for MU and SNDK Ahead?",-0.014053,
+2026-09-22,,News,"Japan, US weigh $19bn chip plant as part of tariff investment pact report",,
+2026-09-22,,News,"One stock is up 540%, and it's not alone",,
+2026-09-22,,News,What China's Fresh Memory-Chip Push Means for Micron and SK Hynix,,
+2026-09-17,2026-09-17,News,"INTC, AMD, MU, NVDA: Chip Stocks Rally As Investors Look Past AI Concerns",0.109905,
+2026-09-22,,News,The Memory Shortage Is Not Over: More Upside for Micron and Sandisk?,,
+2026-09-22,,News,"Micron, Intel and other chip stocks are furthering their strong comebacks",,
+2026-09-22,,News,Sandisk Stock Has Dropped 35% Since June. Heres Where the Stock Could Go in 2026,,
+2026-09-22,,News,"SanDisk Stock Looks Cheap, But Can It Keep Earning This Much?",,
+2026-09-16,2026-09-16,News,SK Hynix stock jumps as memory maker responds to report of potential deal with Intel,0.062120,0.162286
+2026-09-15,2026-09-15,News,"Navigating the Market: Inflation, Yields, &amp; the Fed",-0.007136,0.170439
+2026-09-22,,News,"Sandisk $1,500 Stock Price Ignites Fresh Split Frenzy",,
+2026-09-22,,News,"SNDK Stock Rewarded Dip Buyers Before, But Is It Still The Same Company?",,
+2025-09-01,2025-08-29,Fed funds rate,rate 4.22% (-0.11 pct pts mo/mo),-0.026682,0.191157
+2025-10-01,2025-10-01,Fed funds rate,rate 4.09% (-0.13 pct pts mo/mo),0.024934,0.000413
+2025-11-01,2025-10-31,Fed funds rate,rate 3.88% (-0.21 pct pts mo/mo),0.038529,0.086139
+2025-12-01,2025-12-01,Fed funds rate,rate 3.72% (-0.16 pct pts mo/mo),-0.022934,0.014940
+2026-01-01,2025-12-31,Fed funds rate,rate 3.64% (-0.08 pct pts mo/mo),0.159491,0.472870
+2026-05-01,2026-05-01,Fed funds rate,rate 3.63% (-0.01 pct pts mo/mo),0.058012,0.187852
+2025-03-10,2025-03-10,CPI (inflation),CPI index 319.7 (+0.23% mo/mo),-0.015849,-0.086038
+2025-04-10,2025-04-10,CPI (inflation),CPI index 319.8 (+0.03% mo/mo),0.028801,0.069348
+2025-05-12,2025-05-12,CPI (inflation),CPI index 320.3 (+0.16% mo/mo),0.017688,-0.017688
+2025-06-10,2025-06-10,CPI (inflation),CPI index 320.6 (+0.10% mo/mo),-0.032700,0.021880
+2025-07-10,2025-07-10,CPI (inflation),CPI index 321.4 (+0.25% mo/mo),-0.018317,-0.090096
+2025-08-11,2025-08-11,CPI (inflation),CPI index 322.2 (+0.23% mo/mo),0.079779,0.076320
+2025-09-10,2025-09-10,CPI (inflation),CPI index 323.3 (+0.35% mo/mo),0.140422,0.218750
+2025-10-10,2025-10-10,CPI (inflation),CPI index 324.2 (+0.30% mo/mo),0.151398,0.234283
+2025-12-10,2025-12-10,CPI (inflation),CPI index 325.1 (+0.25% mo/mo),0.037576,-0.133084
+2026-01-12,2026-01-12,CPI (inflation),CPI index 326.0 (+0.30% mo/mo),0.001387,0.051301
+2026-02-10,2026-02-10,CPI (inflation),CPI index 326.6 (+0.17% mo/mo),0.106528,0.156783
+2026-03-10,2026-03-10,CPI (inflation),CPI index 327.5 (+0.27% mo/mo),0.059041,0.069043
+2026-04-10,2026-04-10,CPI (inflation),CPI index 330.3 (+0.87% mo/mo),0.118260,0.046902
+2026-05-11,2026-05-11,CPI (inflation),CPI index 332.4 (+0.64% mo/mo),-0.061736,-0.106516
+2026-06-10,2026-06-10,CPI (inflation),CPI index 334.0 (+0.47% mo/mo),0.145007,0.282754
+2026-07-10,2026-07-10,CPI (inflation),CPI index 332.6 (-0.42% mo/mo),-0.126284,-0.157063
+2026-08-10,2026-08-10,CPI (inflation),CPI index 332.8 (+0.07% mo/mo),0.026763,0.234417
+2026-09-10,2026-09-10,CPI (inflation),CPI index 334.1 (+0.40% mo/mo),-0.035000,-0.095531
+2025-03-07,2025-03-07,Jobs report,jobs 158.3M (+42k mo/mo),0.039216,-0.010980
+2025-04-04,2025-04-04,Jobs report,jobs 158.4M (+67k mo/mo),0.045500,0.214879
+2025-05-02,2025-05-02,Jobs report,jobs 158.5M (+108k mo/mo),0.006105,0.016570
+2025-06-06,2025-06-06,Jobs report,jobs 158.5M (+13k mo/mo),0.068199,0.027586
+2025-07-04,2025-07-03,Jobs report,jobs 158.5M (-20k mo/mo),-0.025641,-0.004525
+2025-08-01,2025-08-01,Jobs report,jobs 158.5M (+64k mo/mo),0.028551,0.018630
+2025-09-05,2025-09-05,Jobs report,jobs 158.5M (-70k mo/mo),0.028373,0.078337
+2025-10-03,2025-10-03,Jobs report,jobs 158.5M (+76k mo/mo),-0.056382,0.027023
+2025-11-07,2025-11-07,Jobs report,jobs 158.4M (-140k mo/mo),0.118883,0.182145
+2025-12-05,2025-12-05,Jobs report,jobs 158.4M (+41k mo/mo),-0.013131,0.019215
+2026-01-02,2026-01-02,Jobs report,jobs 158.4M (-17k mo/mo),-0.004215,0.284552
+2026-02-06,2026-02-06,Jobs report,jobs 158.6M (+160k mo/mo),-0.024333,0.002325
+2026-03-06,2026-03-06,Jobs report,jobs 158.4M (-156k mo/mo),0.116436,0.242922
+2026-04-03,2026-04-02,Jobs report,jobs 158.7M (+214k mo/mo),0.032840,0.113043
+2026-05-01,2026-05-01,Jobs report,jobs 158.8M (+148k mo/mo),0.058012,0.187852
+2026-06-05,2026-06-05,Jobs report,jobs 158.9M (+63k mo/mo),0.053023,0.053812
+2026-07-03,2026-07-02,Jobs report,jobs 158.9M (+31k mo/mo),-0.000327,-0.010212
+2026-08-07,2026-08-07,Jobs report,jobs 158.9M (+21k mo/mo),0.021209,0.108958
+2026-09-04,2026-09-04,Jobs report,jobs 159.1M (+162k mo/mo),-0.001155,-0.027247

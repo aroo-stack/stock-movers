@@ -1,0 +1,123 @@
+date,base_trading_day,type,detail,next_day_return,three_day_return
+2026-10-29,,Earnings,earnings announcement,,
+2026-07-30,2026-07-30,Earnings,EPS 2.02 (surprise +6.7%),-0.073539,-0.072129
+2026-04-30,2026-04-30,Earnings,EPS 2.01 (surprise +3.5%),0.032394,0.047282
+2026-01-29,2026-01-29,Earnings,EPS 2.84 (surprise +6.3%),0.004646,0.043364
+2025-10-30,2025-10-30,Earnings,EPS 1.85 (surprise +4.5%),-0.003795,-0.005011
+2025-07-31,2025-07-31,Earnings,EPS 1.57 (surprise +10.1%),-0.025004,-0.022402
+2025-05-01,2025-05-01,Earnings,EPS 1.65 (surprise +1.7%),-0.037362,-0.069426
+2025-01-30,2025-01-30,Earnings,EPS 2.40 (surprise +2.5%),-0.006692,-0.020161
+2024-10-31,2024-10-31,Earnings,EPS 0.97 (surprise +2.5%),-0.013280,-0.010889
+2024-08-01,,Earnings,EPS 1.40 (surprise +4.4%),,
+2024-05-02,,Earnings,EPS 1.53 (surprise +2.0%),,
+2024-02-01,,Earnings,EPS 2.18 (surprise +3.5%),,
+2023-11-02,,Earnings,EPS 1.46 (surprise +4.9%),,
+2023-08-03,,Earnings,EPS 1.26 (surprise +5.7%),,
+2023-05-04,,Earnings,EPS 1.52 (surprise +6.4%),,
+2023-02-02,,Earnings,EPS 1.88 (surprise -3.8%),,
+2022-10-27,,Earnings,EPS 1.29 (surprise +1.4%),,
+2022-07-28,,Earnings,EPS 1.20 (surprise +3.9%),,
+2022-04-28,,Earnings,EPS 1.52 (surprise +6.5%),,
+2022-01-27,,Earnings,EPS 2.10 (surprise +11.2%),,
+2021-10-28,,Earnings,EPS 1.24 (surprise +0.2%),,
+2021-07-27,,Earnings,EPS 1.30 (surprise +28.6%),,
+2021-04-28,,Earnings,EPS 1.40 (surprise +42.2%),,
+2021-01-27,,Earnings,EPS 1.68 (surprise +18.7%),,
+2020-10-29,,Earnings,EPS 0.73 (surprise +4.5%),,
+2026-09-23,2026-09-23,News,"Billionaire Tim Draper takes aim at Apple, Meta's Bitcoin-free balance sheets",,
+2026-09-23,2026-09-23,News,Apple Settlement Over Siri Intelligence Features Means Eligible iPhone Owners Can Receive Up to $95,,
+2026-09-23,2026-09-23,News,Bank of America Flags Mixed iPhone 18 Demand Signal,,
+2026-09-23,2026-09-23,News,"Apple Slips as $20,000 Macs Challenge Token Rent",,
+2026-09-23,2026-09-23,News,BofA Sends Stark Message to Apple Stock Investors on iPhone 18,,
+2026-09-23,2026-09-23,News,"Apple Average iPhone Wait Times Increase, UBS Says; Maintains 'Neutral' Rating",,
+2026-09-23,2026-09-23,News,Jamf Takes Apple Management into the AI Era at JNUC 2026,,
+2026-09-23,2026-09-23,News,The 42-State AG Coalition: How State Attorneys General Are Building the Agent Liability Framework Congress Won’t,,
+2026-09-23,2026-09-23,News,Meta’s “10 Million Paid Users” Problem Has a Simple Solution,,
+2026-09-23,2026-09-23,News,Looking for consumer and investor sentiment trends? Turn to social media.,,
+2026-09-23,2026-09-23,News,Gary Cohn on Meta's Muse: 'I'm not comfortable giving up my personal data',,
+2026-09-23,2026-09-23,News,How Qualcomm is targeting agentic AI with its 2 new smartphone chips,,
+2026-09-23,2026-09-23,News,Meta’s Muse AI Agent Triggers Worries About Brokerage Stocks,,
+2026-09-23,2026-09-23,News,Nvidia Slips as Four Macs Attack Cloud Inference Economics,,
+2026-09-23,2026-09-23,News,Charles Schwab Stock Fell 6% on AI Fears. The Rate Hike Everyone Feared Actually Helps It,,
+2026-09-23,2026-09-23,News,MoonPay to Acquire North Capital in $60M Deal to Expand Tokenization,,
+2026-09-23,2026-09-23,News,Meta joins Apple in bringing FDA-approved hearing support to its wearables,,
+2026-09-23,2026-09-23,News,The 42-State AG Coalition: How State Attorneys General Are Building the Agent Liability Framework Congress Wont,,
+2026-09-23,2026-09-23,News,Metas 10 Million Paid Users Problem Has a Simple Solution,,
+2026-09-23,2026-09-23,News,Apple Takes AI Fight Straight to Nvidia and Microsoft,,
+2026-09-23,2026-09-23,News,What Microsoft's Trailing Multiple Leaves Out,,
+2026-09-23,2026-09-23,News,"EXCLUSIVE: AI Data Center Boom Is Overkill, Defense AI CEO Warns Compute Demand Will Drop",,
+2026-09-23,2026-09-23,News,Why Apple's stock chart is probably putting a smile on the face of new CEO John Ternus,,
+2026-09-23,2026-09-23,News,"Apples iPhone 18 Demand Improves At The Margin, China Remains Weak Spot, Says UBS Latest Target Implies 13% Downside Pot",,
+2026-09-23,2026-09-23,News,The Stock Market Is Sleeping on the Next Big AI Catalyst,,
+2026-09-23,2026-09-23,News,Gadgets Are Going Premium-and Manufacturers Are Raking It In,,
+2026-09-23,2026-09-23,News,Muse AI Makes Meta Connect a Must Watch for Investors,,
+2026-09-23,2026-09-23,News,OpenAIs search for a chief communications officer hits 9 months after a top candidate turned down the role,,
+2026-09-23,2026-09-23,News,Why Is NVIDIA Getting Cheaper While Apple Hits New All-Time Highs,,
+2026-09-22,2026-09-22,News,"Why Did AAPL, OKTA, AMD Stocks Jump To 52-Week Highs Today?",,
+2026-09-23,2026-09-23,News,Meta Launches Muse: A Solution in Search of a Problem,,
+2026-09-23,2026-09-23,News,$223 Billion Back To Shareholders: Inside The MSFT Machine,,
+2026-09-23,2026-09-23,News,Metas new AI agent just got me $250 in flight credits,,
+2026-09-23,2026-09-23,News,"Nasdaq Jumps To Close At Record As Chipmakers Climb, Oil Prices Cool AAPL, META, SPCX, MSFT, VKTX In Focus",,
+2026-09-23,2026-09-23,News,Why Apple could soon join Nvidia in the exclusive $5 trillion club,,
+2026-09-23,2026-09-23,News,Stock Market Today: Dow Skids But Apple Eyes A Buy Point; Report Says Trump Makes These Trades,,
+2026-09-23,2026-09-23,News,"Apple Takes Aim at Nvidias AI Economics: New Macs Have No Cost per Token, Hardware Chief Says",,
+2026-09-23,2026-09-23,News,Apple Stock Is Trying to Close With $5 Trillion Market Cap for First Time Ahead of iPhone Duo Release,,
+2026-09-23,2026-09-23,News,Invest Like Buffett: Lessons From the Oracle of Omaha,,
+2026-09-23,2026-09-23,News,AAPL Stock Hits Record Highs Apple Reportedly Explores Screenless Health Trackers And Other Wearables Following iPhone D,,
+2024-10-01,2024-10-01,Fed funds rate,rate 4.83% (-0.30 pct pts mo/mo),0.002520,0.002608
+2024-11-01,2024-11-01,Fed funds rate,rate 4.64% (-0.19 pct pts mo/mo),-0.004037,-0.000852
+2024-12-01,2024-11-29,Fed funds rate,rate 4.48% (-0.16 pct pts mo/mo),0.009523,0.023933
+2025-01-01,2024-12-31,Fed funds rate,rate 4.33% (-0.15 pct pts mo/mo),-0.026236,-0.021644
+2025-09-01,2025-08-29,Fed funds rate,rate 4.22% (-0.11 pct pts mo/mo),-0.010425,0.032911
+2025-10-01,2025-10-01,Fed funds rate,rate 4.09% (-0.13 pct pts mo/mo),0.006577,0.004854
+2025-11-01,2025-10-31,Fed funds rate,rate 3.88% (-0.21 pct pts mo/mo),-0.004882,-0.000851
+2025-12-01,2025-12-01,Fed funds rate,rate 3.72% (-0.16 pct pts mo/mo),0.010915,-0.008478
+2026-01-01,2025-12-31,Fed funds rate,rate 3.64% (-0.08 pct pts mo/mo),-0.003126,-0.034944
+2026-05-01,2026-05-01,Fed funds rate,rate 3.63% (-0.01 pct pts mo/mo),-0.011816,0.026308
+2024-10-10,2024-10-10,CPI (inflation),CPI index 314.7 (+0.21% mo/mo),-0.006505,0.021001
+2024-11-11,2024-11-11,CPI (inflation),CPI index 315.6 (+0.29% mo/mo),0.000000,0.017794
+2024-12-10,2024-12-10,CPI (inflation),CPI index 316.5 (+0.28% mo/mo),-0.005166,0.001453
+2025-01-10,2025-01-10,CPI (inflation),CPI index 317.6 (+0.34% mo/mo),-0.010344,0.004307
+2025-02-10,2025-02-10,CPI (inflation),CPI index 319.0 (+0.43% mo/mo),0.021832,0.060971
+2025-03-10,2025-03-10,CPI (inflation),CPI index 319.7 (+0.23% mo/mo),-0.029189,-0.078249
+2025-04-10,2025-04-10,CPI (inflation),CPI index 319.8 (+0.03% mo/mo),0.040595,0.061548
+2025-05-12,2025-05-12,CPI (inflation),CPI index 320.3 (+0.16% mo/mo),0.010152,0.003131
+2025-06-10,2025-06-10,CPI (inflation),CPI index 320.6 (+0.10% mo/mo),-0.019194,-0.030690
+2025-07-10,2025-07-10,CPI (inflation),CPI index 321.4 (+0.25% mo/mo),-0.005885,-0.015536
+2025-08-11,2025-08-11,CPI (inflation),CPI index 322.2 (+0.23% mo/mo),0.010872,0.024650
+2025-09-10,2025-09-10,CPI (inflation),CPI index 323.3 (+0.35% mo/mo),0.014286,0.043697
+2025-10-10,2025-10-10,CPI (inflation),CPI index 324.2 (+0.30% mo/mo),0.009744,0.016594
+2025-12-10,2025-12-10,CPI (inflation),CPI index 325.1 (+0.25% mo/mo),-0.002690,-0.016752
+2026-01-12,2026-01-12,CPI (inflation),CPI index 326.0 (+0.30% mo/mo),0.003074,-0.007838
+2026-02-10,2026-02-10,CPI (inflation),CPI index 326.6 (+0.17% mo/mo),0.006650,-0.065405
+2026-03-10,2026-03-10,CPI (inflation),CPI index 327.5 (+0.27% mo/mo),-0.000077,-0.041061
+2026-04-10,2026-04-10,CPI (inflation),CPI index 330.3 (+0.87% mo/mo),-0.004914,0.022842
+2026-05-11,2026-05-11,CPI (inflation),CPI index 332.4 (+0.64% mo/mo),0.007243,0.018894
+2026-06-10,2026-06-10,CPI (inflation),CPI index 334.0 (+0.47% mo/mo),0.013890,0.016599
+2026-07-10,2026-07-10,CPI (inflation),CPI index 332.6 (-0.42% mo/mo),0.006311,0.038627
+2026-08-10,2026-08-10,CPI (inflation),CPI index 332.8 (+0.07% mo/mo),-0.010867,-0.009732
+2026-09-10,2026-09-10,CPI (inflation),CPI index 334.1 (+0.40% mo/mo),0.017454,0.014606
+2024-10-04,2024-10-04,Jobs report,jobs 157.9M (+155k mo/mo),-0.022531,0.012081
+2024-11-01,2024-11-01,Jobs report,jobs 157.9M (+33k mo/mo),-0.004037,-0.000852
+2024-12-06,2024-12-06,Jobs report,jobs 158.1M (+134k mo/mo),0.016101,0.015031
+2025-01-03,2025-01-03,Jobs report,jobs 158.3M (+237k mo/mo),0.006739,-0.002712
+2025-02-07,2025-02-07,Jobs report,jobs 158.3M (-48k mo/mo),0.001187,0.041736
+2025-03-07,2025-03-07,Jobs report,jobs 158.3M (+42k mo/mo),-0.048480,-0.092400
+2025-04-04,2025-04-04,Jobs report,jobs 158.4M (+67k mo/mo),-0.036734,0.055579
+2025-05-02,2025-05-02,Jobs report,jobs 158.5M (+108k mo/mo),-0.031458,-0.044315
+2025-06-06,2025-06-06,Jobs report,jobs 158.5M (+13k mo/mo),-0.012113,-0.025206
+2025-07-04,2025-07-03,Jobs report,jobs 158.5M (-20k mo/mo),-0.016858,-0.011285
+2025-08-01,2025-08-01,Jobs report,jobs 158.5M (+64k mo/mo),0.004793,0.053711
+2025-09-05,2025-09-05,Jobs report,jobs 158.5M (-70k mo/mo),-0.007551,-0.053820
+2025-10-03,2025-10-03,Jobs report,jobs 158.5M (+76k mo/mo),-0.005155,0.000155
+2025-11-07,2025-11-07,Jobs report,jobs 158.4M (-140k mo/mo),0.004549,0.019612
+2025-12-05,2025-12-05,Jobs report,jobs 158.4M (+41k mo/mo),-0.003192,0.000000
+2026-01-02,2026-01-02,Jobs report,jobs 158.4M (-17k mo/mo),-0.013837,-0.039408
+2026-02-06,2026-02-06,Jobs report,jobs 158.6M (+160k mo/mo),-0.011660,-0.008493
+2026-03-06,2026-03-06,Jobs report,jobs 158.4M (-156k mo/mo),0.009400,0.013012
+2026-04-03,2026-04-02,Jobs report,jobs 158.7M (+214k mo/mo),0.011488,0.011644
+2026-05-01,2026-05-01,Jobs report,jobs 158.8M (+148k mo/mo),-0.011816,0.026308
+2026-06-05,2026-06-05,Jobs report,jobs 158.9M (+63k mo/mo),-0.018872,-0.051279
+2026-07-03,2026-07-02,Jobs report,jobs 158.9M (+31k mo/mo),0.013058,0.015423
+2026-08-07,2026-08-07,Jobs report,jobs 158.9M (+21k mo/mo),-0.015332,-0.034530
+2026-09-04,2026-09-04,Jobs report,jobs 159.1M (+162k mo/mo),-0.011720,0.020627

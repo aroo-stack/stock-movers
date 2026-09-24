@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Actually Moves This Stock?</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a; --bg-elevated: #1e293b; --border: #334155;
+      --text: #f1f5f9; --text-muted: #94a3b8; --primary: #3b82f6;
+      --buy: #10b981; --sell: #ef4444; --warn: #f59e0b;
+      --violet: #a78bfa;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; min-height: 100vh; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 20px 60px; }
+
+    header { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .logo { font-size: 20px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+    .logo::before { content: ''; width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary), var(--buy)); border-radius: 8px; flex-shrink: 0; }
+    .tagline { color: var(--text-muted); font-size: 13px; margin: 6px 0 18px; }
+
+    .analyze-form { display: flex; gap: 8px; flex-wrap: wrap; }
+    .analyze-form input { flex: 1; min-width: 260px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; color: var(--text); font-size: 14px; }
+    .analyze-form input:focus { outline: none; border-color: var(--primary); }
+    .analyze-form button { background: var(--primary); color: white; border: none; border-radius: 8px; padding: 11px 22px; font-weight: 600; font-size: 14px; cursor: pointer; }
+    .analyze-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .history { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 14px 0 4px; font-size: 12px; color: var(--text-muted); }
+    .history:empty { display: none; }
+    .history .chip { background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text); border-radius: 999px; padding: 3px 12px; cursor: pointer; font-size: 12px; }
+    .history .chip:hover { border-color: var(--primary); }
+    .history .chip .cached { color: var(--buy); margin-left: 4px; }
+
+    .status { margin-top: 20px; }
+    .loading { display: flex; align-items: center; gap: 12px; padding: 28px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 15px; }
+    .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading small { display: block; color: var(--text-muted); margin-top: 6px; }
+
+    .error { padding: 16px 18px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.45); border-radius: 10px; color: var(--sell); font-size: 13px; white-space: pre-wrap; }
+    .error b { color: var(--text); }
+    .empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+
+    .card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-top: 20px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: baseline; margin-top: 22px; }
+    .meta h1 { font-size: 26px; font-weight: 700; }
+    .meta .sub { color: var(--text-muted); font-size: 13px; }
+    .meta .counts { color: var(--text-muted); font-size: 13px; margin-left: auto; }
+    .section-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
+
+    .summary-box { background: linear-gradient(135deg, rgba(16,185,129,0.14), rgba(59,130,246,0.1)); border: 1px solid rgba(16,185,129,0.4); border-radius: 12px; padding: 18px 20px; }
+    .summary-box h2 { font-size: 14px; color: var(--buy); margin-bottom: 10px; }
+    .summary-box .bullets { list-style: none; }
+    .summary-box .bullets li { margin: 8px 0; padding-left: 18px; position: relative; font-size: 14px; }
+    .summary-box .bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--buy); }
+    .summary-box .context, .summary-box .reminder { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+
+    .baseline-strip { display: flex; flex-wrap: wrap; gap: 18px; font-size: 13px; color: var(--text-muted); }
+    .baseline-strip b { color: var(--text); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 8px 10px; border-bottom: 1px solid rgba(51, 65, 85, 0.5); }
+    tr:last-child td { border-bottom: none; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    td.num { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+    .pos { color: var(--buy); } .neg { color: var(--sell); }
+    .verdict { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+    .verdict.above { background: rgba(16,185,129,0.18); color: var(--buy); }
+    .verdict.below { background: rgba(59,130,246,0.18); color: var(--primary); }
+    .verdict.line { background: rgba(148,163,184,0.18); color: var(--text-muted); }
+    .verdict.few { background: rgba(245,158,11,0.18); color: var(--warn); }
+
+    .chart-tools { display: flex; gap: 8px; margin-bottom: 12px; }
+    .chart-tools button { padding: 6px 12px; background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; cursor: pointer; }
+    .chart-tools button:hover { border-color: var(--primary); color: var(--text); }
+    #chart { background: #ffffff; border-radius: 8px; }
+
+    .chart-note { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+    .chart-note b { color: var(--text); }
+
+    pre.trace { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 11.5px; line-height: 1.55; overflow-x: auto; color: #cbd5e1; }
+    .trace-label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .notes { list-style: none; font-size: 12.5px; color: var(--text-muted); }
+    .notes li { margin: 6px 0; padding-left: 16px; position: relative; }
+    .notes li::before { content: '•'; position: absolute; left: 0; color: var(--primary); }
+
+    details.events summary { cursor: pointer; font-size: 13px; color: var(--primary); outline: none; }
+    .events-table-wrap { margin-top: 12px; max-height: 320px; overflow: auto; }
+    .event-detail { color: var(--text-muted); max-width: 380px; }
+
+    footer { margin-top: 34px; font-size: 12px; color: var(--text-muted); }
+    footer code { background: var(--bg-elevated); padding: 1px 6px; border-radius: 4px; }
+
+    @media (max-width: 640px) { .analyze-form input { min-width: 100%; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="logo">What Actually Moves This Stock?</div>
+        <div class="tagline">Earnings, news &amp; macro-event impact vs. an ordinary day&rsquo;s movement</div>
+      </div>
+      <form class="analyze-form" id="analyze-form">
+        <input id="ticker-input" type="text" placeholder="Ticker or sector, e.g. MU  gold  technology"
+               autocomplete="off" spellcheck="false">
+        <button id="analyze-btn" type="submit">Analyze</button>
+      </form>
+    </header>
+
+    <div class="history" id="history"></div>
+
+    <main>
+      <div id="status" class="status"></div>
+      <section id="report" hidden></section>
+      <div class="empty" id="intro">
+        Enter a ticker (e.g. <b>MU</b>, <b>TSLA</b>), commodity (<b>gold</b>, <b>silver</b>),
+        or sector name (<b>technology</b>, <b>energy</b>) and click <b>Analyze</b>.<br>
+        The full analysis pulls ~2 years of prices plus earnings, news and Fed/CPI/jobs
+        release dates, so it can take 30–60 seconds.
+      </div>
+    </main>
+
+    <footer>
+      Computed on demand by <code>stock_movers.py --json &lt;ticker&gt;</code> — nothing is written to disk;
+      recent results are cached by the server for 10 minutes and by the page for the session.
+    </footer>
+  </div>
+
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+  <script type="module">
+    const $ = (sel) => document.querySelector(sel);
+    const form = $('#analyze-form');
+    const input = $('#ticker-input');
+    const btn = $('#analyze-btn');
+    const statusEl = $('#status');
+    const reportEl = $('#report');
+    const historyEl = $('#history');
+    const intro = $('#intro');
+
+    const TICKER_RE = /^[A-Za-z0-9 .\-_=^]{1,32}$/;
+    const sessionHistory = [];   // [{ ticker, label, data }]
+
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g,
+      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const pct = (v) => (v === null || v === undefined) ? '—' : (v * 100).toFixed(2) + '%';
+    const spct = (v) => (v === null || v === undefined) ? '—' : (v >= 0 ? '+' : '') + (v * 100).toFixed(2) + '%';
+    const signedCls = (v) => v > 0 ? 'pos' : (v < 0 ? 'neg' : '');
+    const verdictCls = (v) => ({
+      'notably above baseline': 'above',
+      'below baseline': 'below',
+      'in line with baseline': 'line',
+      'too few events': 'few',
+    }[v] || 'line');
+
+    async function analyzeTicker(raw, { fresh = false } = {}) {
+      const ticker = raw.trim();
+      if (!ticker) { showError('Type a ticker first.'); return; }
+      if (!TICKER_RE.test(ticker)) {
+        showError(`"${raw}" doesn't look like a valid ticker or sector name.\n` +
+                  `Try something like MU, TSLA, gold or technology.`);
+        return;
+      }
+      const cached = sessionHistory.find((h) => h.ticker === ticker.toUpperCase());
+      if (cached && !fresh) {
+        renderReport(cached.data);
+        flash(`Rendering ${cached.ticker} from this session’s cache — click Analyze again to fetch fresh data.`);
+        return;
+      }
+      intro.hidden = true;
+      reportEl.hidden = true;
+      showLoading(ticker.toUpperCase());
+      btn.disabled = true;
+
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 190000);
+      try {
+        const res = await fetch(`/api/analyze/${encodeURIComponent(ticker)}`, { signal: controller.signal });
+        const body = await res.json();
+        if (!res.ok) { showError(body.error || `Analysis failed (HTTP ${res.status}).`); return; }
+        const meta = {
+          ticker: body.meta.ticker,
+          label: ticker.toUpperCase() === body.meta.ticker ? (ticker === 'gold' ? 'gold' : body.meta.ticker) : `${ticker} → ${body.meta.ticker}`,
+        };
+        const existing = sessionHistory.findIndex((h) => h.ticker === meta.ticker);
+        if (existing >= 0) sessionHistory.splice(existing, 1);
+        sessionHistory.unshift({ ...meta, data: body });
+        renderHistory();
+        renderReport(body);
+      } catch (err) {
+        const msg = err.name === 'AbortError'
+          ? 'The analysis took too long and was cancelled. Try again (sources can be slow).'
+          : 'Could not reach the analysis server. Is `npm start` still running?';
+        showError(msg);
+      } finally {
+        clearTimeout(t);
+        btn.disabled = false;
+      }
+    }
+
+    function showLoading(ticker) {
+      statusEl.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <div>Analyzing <b>${esc(ticker)}</b>…
+            <small>Pulling ~2y of prices plus earnings, news and Fed/CPI/jobs dates. This usually takes 30–60 seconds.</small>
+          </div>
+        </div>`;
+    }
+
+    function showError(msg) {
+      statusEl.innerHTML = `<div class="error"><b>Something went wrong.</b>\n${esc(msg)}</div>`;
+      reportEl.hidden = true;
+    }
+
+    function flash(msg) {
+      statusEl.innerHTML = `<div class="error"><span id="flash-msg">${esc(msg)}</span></div>`;
+      const bar = statusEl.querySelector('.error');
+      bar.style.background = 'rgba(16,185,129,.1)';
+      bar.style.borderColor = 'rgba(16,185,129,.4)';
+      bar.style.color = 'var(--buy)';
+      setTimeout(() => { if ($('#flash-msg')) statusEl.innerHTML = ''; }, 6000);
+    }
+
+    function renderHistory() {
+      historyEl.innerHTML = sessionHistory.slice(0, 6).map((h, i) =>
+        `<span class="chip" title="click to re-render ${esc(h.ticker)} without re-fetching">
+          ${esc(h.label)}${i === 0 ? '<span class="cached">(cached)</span>' : ''}
+        </span>`).join('');
+      historyEl.querySelectorAll('.chip').forEach((c, i) => {
+        c.addEventListener('click', () => renderReport(sessionHistory[i].data));
+      });
+    }
+
+    function renderReport(d) {
+      statusEl.innerHTML = '';
+      const meta = d.meta;
+      reportEl.hidden = false;
+      let html = `
+        <div class="meta">
+          <h1>${esc(meta.ticker)}</h1>
+          <span class="sub">${esc(meta.first)} .. ${esc(meta.last)} · analyzed ${esc(meta.generated_at)}</span>
+          <span class="counts">${meta.n_trading_days} trading days · ${meta.n_events} events (${meta.n_plotted} plotted)</span>
+        </div>`;
+
+      html += `<div class="card summary-box"><h2>In plain English</h2><ul class="bullets">` +
+        d.summary.bullets.map((b) => `<li>${esc(b)}</li>`).join('') +
+        `</ul><div class="context">${esc(d.summary.context)}</div>` +
+        `<div class="reminder">One reminder: ${esc(d.summary.reminder)}</div></div>`;
+
+      html += `<div class="card"><div class="section-title">Ordinary-day baseline (control)</div>` +
+        `<div class="baseline-strip">` +
+        `<span><b>${d.baseline.pool_n}</b> ordinary days</span>` +
+        `<span>next-day avg |move| <b>${pct(d.baseline.avg_abs_r1)}</b> (median ${pct(d.baseline.med_abs_r1)}, sd ${pct(d.baseline.sd_abs_r1)})</span>` +
+        `<span>3-day avg |move| <b>${pct(d.baseline.avg_abs_r3)}</b> (median ${pct(d.baseline.med_abs_r3)})</span>` +
+        `</div></div>`;
+
+      html += `<div class="card">` + tTable(d, false) + `</div>`;
+      html += `<div class="card">` + tTable(d, true) + `</div>`;
+
+      html += `<div class="card"><div class="section-title">Price chart with event markers</div>
+        <div class="chart-tools">
+          <button id="chart-show">Show all markers</button>
+          <button id="chart-hide">Hide markers</button>
+        </div>
+        <div id="chart"></div>
+        <div class="chart-note"><b>Tip:</b> click a legend entry to toggle that event type; hover a marker for the headline
+        and its measured next-day / 3-day move.</div></div>`;
+
+      html += `<div class="card"><div class="section-title">Manual verification against raw closes</div>` +
+        d.verification.map((v) =>
+          `<div class="trace-label">${esc(v.label)}</div><pre class="trace">${esc(v.lines.join('\n'))}</pre>`).join('') +
+        getVerificationEmptyNote(d) + `</div>`;
+
+      html += `<div class="card"><div class="section-title">Data notes</div><ul class="notes">` +
+        d.notes.map((n) => `<li>${esc(n)}</li>`).join('') + `</ul></div>`;
+
+      const eventsCount = d.events.length;
+      const outside = d.events.filter((e) => !e.base_date).length;
+      const rows = d.events.map((e) => `
+        <tr>
+          <td class="num">${esc(e.date) || '—'}</td>
+          <td>${esc(e.base_date) || '<span class="event-detail">(no base day)</span>'}</td>
+          <td>${esc(e.type)}</td>
+          <td class="event-detail">${esc(e.detail)}</td>
+          <td class="num">${e.r1 === null ? '' : spct(e.r1)}</td>
+          <td class="num">${e.r3 === null ? '' : spct(e.r3)}</td>
+        </tr>`).join('');
+
+      html += `<div class="card events"><details>
+        <summary>Event list — ${eventsCount} events${outside ? ` (${outside} outside the measurable price window)` : ''}</summary>
+        <div class="events-table-wrap"><table>
+          <thead><tr><th>event day</th><th>base day</th><th>type</th><th>detail</th><th class="num">r1</th><th class="num">r3</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table></div>
+      </details></div>`;
+
+      reportEl.innerHTML = html;
+      renderChart(d);
+      $('#chart-show').addEventListener('click', () => chartSetMarkers(d, true));
+      $('#chart-hide').addEventListener('click', () => chartSetMarkers(d, false));
+    }
+
+    function getVerificationEmptyNote(d) {
+      return d.verification.length ? '' :
+        '<div class="chart-note">(no events with a measurable reaction to trace)</div>';
+    }
+
+    function tTable(d, r3) {
+      const suf = r3 ? 'r3' : 'r1';
+      const title = r3 ? '3-day' : 'next-day';
+      const row = (t) => {
+        const s = d.stats[t];
+        if (!s) return `<tr><td>${esc(t)}</td><td colspan="7">(no measurable ${suf} return)</td></tr>`;
+        const avg = s[`avg_abs_${suf}`];
+        const med = s[`med_abs_${suf}`];
+        const sgn = s[`avg_sgn_${suf}`];
+        const bl = s[`bl_avg_abs_${suf}`];
+        const v = s[`verdict_${suf}`];
+        const diff = (avg !== null && avg !== undefined && bl !== null && bl !== undefined) ? avg - bl : null;
+        return `<tr>
+          <td>${esc(t)}</td>
+          <td class="num">${s[`n_${suf}`]}</td>
+          <td class="num">${avg == null ? '—' : pct(avg)}</td>
+          <td class="num">${med == null ? '—' : pct(med)}</td>
+          <td class="num ${sgn == null ? '' : signedCls(sgn)}">${sgn == null ? '—' : spct(sgn)}</td>
+          <td class="num">${bl == null ? '—' : pct(bl)}</td>
+          <td class="num ${diff == null ? '' : signedCls(diff)}">${diff == null ? '—' : spct(diff)}</td>
+          <td><span class="verdict ${verdictCls(v)}">${esc(v)}</span></td>
+        </tr>`;
+      };
+      const head = `<thead><tr>
+        <th>event type</th><th class="num">n</th><th class="num">avg |${suf}|</th><th class="num">mdn |${suf}|</th>
+        <th class="num">avg ${suf}</th><th class="num">control |${suf}|</th><th class="num">diff</th><th>verdict (${title})</th>
+      </tr></thead>`;
+      return `<div class="section-title">Event-type impact vs random-day baseline — ${title}</div>
+        <table>${head}<tbody>${d.types.map(row).join('')}</tbody></table>`;
+    }
+
+    function renderChart(d) {
+      if (!window.Plotly) { return; }
+      const cfg = { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] };
+      Plotly.newPlot('chart', JSON.parse(JSON.stringify(d.chart.traces)),
+                     JSON.parse(JSON.stringify(d.chart.layout)), cfg);
+    }
+
+    function chartSetMarkers(d, show) {
+      if (!window.Plotly || !$('#chart')) return;
+      const markers = d.chart.traces.map((tr, i) => ({ tr, i }))
+        .filter((x) => x.i > 0 && (x.tr.mode || '').includes('markers'))
+        .map((x) => x.i);
+      if (!markers.length) return;
+      Plotly.restyle('chart', { visible: show ? true : 'legendonly' }, markers);
+    }
+
+    form.addEventListener('submit', (e) => { e.preventDefault(); analyzeTicker(input.value, { fresh: true }); });
+
+    if (window.Plotly) {
+      renderHistory();
+    } else {
+      statusEl.innerHTML = `<div class="error"><b>Plotly failed to load.</b>\nCheck your internet connection and reload the page.</div>`;
+    }
+  </script>
+</body>
+</html>
