@@ -1,0 +1,16 @@
+# dependencies (regenerated via `npm install`)
+node_modules/
+
+# python bytecode cache (never needed in git)
+__pycache__/
+*.pyc
+*.pyo
+
+# stale per-ticker output files from the old file-writing CLI mode
+# (the web app computes on-demand now; nothing is written to disk)
+*_events.csv
+*_report.html
+
+# logs / local noise
+*.log
+.DS_Store
