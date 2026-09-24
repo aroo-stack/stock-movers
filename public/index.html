@@ -78,6 +78,17 @@
 
     .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-bottom: 14px; font-weight: 700; }
 
+    .upcoming { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; padding: 6px 4px 4px; }
+    .upcoming .u-item { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+    .upcoming .u-label { display: block; font-weight: 700; letter-spacing: 0.02em; }
+    .upcoming .u-date { display: block; font-family: var(--mono); font-size: 13.5px; margin-top: 6px; color: var(--ink); }
+    .upcoming .u-days { display: inline-block; margin-top: 6px; font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--teal); background: rgba(20, 122, 99, 0.12); border-radius: 999px; padding: 2px 9px; }
+    .upcoming .u-na { color: var(--muted); font-size: 12px; font-style: italic; }
+    .upcoming .u-source { display: block; margin-top: 7px; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .cluster-note { font-size: 13px; color: var(--muted); margin: 0 0 14px; max-width: 62ch; }
+    .cluster-note b { color: var(--ink-2); }
+
     .summary-box { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 10px; padding: 22px 26px; font-family: var(--serif); font-size: 17px; }
     .summary-box h2 { font-size: 12px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 12px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; }
     .summary-box .bullets { list-style: none; }
@@ -190,6 +201,10 @@
       'below baseline': 'below',
       'in line with baseline': 'line',
       'too few events': 'few',
+      'bigger when clustered': 'above',
+      'smaller when clustered': 'below',
+      'no clear difference': 'line',
+      'not enough data': 'few',
     }[v] || 'line');
 
     async function analyzeTicker(raw, { fresh = false } = {}) {
@@ -282,6 +297,7 @@
           <span class="counts">${meta.n_trading_days} trading days · ${meta.n_events} events (${meta.n_plotted} plotted)</span>
         </div>`;
 
+      html += upcomingPanel(d);
       html += `<div class="card summary-box"><h2>In plain English</h2><ul class="bullets">` +
         d.summary.bullets.map((b) => `<li>${esc(b)}</li>`).join('') +
         `</ul><div class="context">${esc(d.summary.context)}</div>` +
@@ -296,6 +312,8 @@
 
       html += `<div class="card">` + tTable(d, false) + `</div>`;
       html += `<div class="card">` + tTable(d, true) + `</div>`;
+
+      html += clusteringSection(d);
 
       html += `<div class="card"><div class="section-title">Price chart with event markers</div>
         <div class="chart-tools">
@@ -374,6 +392,46 @@
       </tr></thead>`;
       return `<div class="section-title">Event-type impact vs random-day baseline — ${title}</div>
         <table>${head}<tbody>${d.types.map(row).join('')}</tbody></table>`;
+    }
+
+    function upcomingPanel(d) {
+      const rows = d.upcoming || [];
+      if (!rows.length) return '';
+      const daysLabel = (n) => (n === null || n === undefined) ? '' : (n <= 0 ? 'today' : (n === 1 ? 'in 1 day' : `in ${n} days`));
+      const items = rows.map((r) => `
+        <div class="u-item">
+          <span class="u-label">${esc(r.type)}</span>
+          ${r.date
+            ? `<span class="u-date">${esc(r.date)}</span>
+               <span class="u-days">${esc(daysLabel(r.days))}</span>`
+            : `<span class="u-na">${esc(r.note || 'not announced yet')}</span>`}
+          <span class="u-source">${esc(r.source || '')}</span>
+        </div>`).join('');
+      return `<div class="card"><div class="section-title">Up next (countdown)</div>
+        <div class="upcoming">${items}</div></div>`;
+    }
+
+    function clusteringSection(d) {
+      const c = d.clustering;
+      if (!c || !c.rows || !c.rows.length) return '';
+      const sentences = (c.sentences || []).map((s) => `<div class="cluster-note">${esc(s)}</div>`).join('');
+      const rows = c.rows.map((r) => {
+        const avg = (v) => (v === null || v === undefined) ? '—' : pct(v);
+        return `<tr>
+          <td>${esc(r.type)}</td>
+          <td class="num">${avg(r.avg_isolated)}</td>
+          <td class="num">${avg(r.avg_clustered)}</td>
+          <td class="num">${r.n_isolated}</td>
+          <td class="num">${r.n_clustered}</td>
+          <td><span class="verdict ${verdictCls(r.verdict)}">${esc(r.verdict)}</span></td>
+        </tr>`;
+      }).join('');
+      const head = `<thead><tr>
+        <th>event type</th><th class="num">isolated avg |r1|</th><th class="num">clustered avg |r1|</th>
+        <th class="num">n (isolated)</th><th class="num">n (clustered)</th><th>verdict</th>
+      </tr></thead>`;
+      return `<div class="card"><div class="section-title">Does event clustering matter? (another event within ${c.window_days} days)</div>
+        ${sentences}<table>${head}<tbody>${rows}</tbody></table></div>`;
     }
 
     function renderChart(d) {

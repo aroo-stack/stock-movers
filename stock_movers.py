@@ -11,6 +11,11 @@ and compares each event type against a random-day control sample drawn from
 the same date range, so the result answers: does event X move this stock
 more than an ordinary random day would?
 
+It also looks forward ("up next" countdown to the next earnings date, Fed
+decision, CPI release, and jobs report) and checks whether events that land
+clustered together (within a few days of each other) move the stock any
+differently than events that land in isolation.
+
 Dependencies: yfinance, pandas, numpy, matplotlib, requests
 Run:          python stock_movers.py TICKER            (writes report.html + csv)
               python stock_movers.py --json TICKER     (prints the full report
@@ -44,6 +49,27 @@ RSS_URL = "https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US
 FRED_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
 FINVIZ_URL = "https://finviz.com/quote.ashx?t={ticker}&p=d"
 NY = "America/New_York"
+
+# Publicly pre-announced 2026 calendars used for the forward-looking "up next"
+# panel: FOMC announcement days (2nd day of each 2-day meeting, per the Fed's
+# published 2026 schedule) and the BLS release dates for CPI and the
+# Employment Situation (jobs) report.  These are exact scheduled dates, so the
+# countdown is precise the moment the calendars are published.
+FOMC_2026 = ["2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17",
+             "2026-07-29", "2026-09-16", "2026-10-28", "2026-12-09"]
+CPI_2026 = ["2026-01-13", "2026-02-13", "2026-03-11", "2026-04-10",
+            "2026-05-12", "2026-06-10", "2026-07-14", "2026-08-12",
+            "2026-09-11", "2026-10-14", "2026-11-10", "2026-12-10"]
+JOBS_2026 = ["2026-01-09", "2026-02-11", "2026-03-06", "2026-04-03",
+             "2026-05-08", "2026-06-05", "2026-07-02", "2026-08-07",
+             "2026-09-04", "2026-10-02", "2026-11-06", "2026-12-04"]
+
+# Event-clustering analysis: an event counts as "clustered" when another
+# measured event lands within this many days before or after it, and a verdict
+# is only reported when BOTH the isolated and clustered group hold at least
+# this many occurrences (the historical samples are small).
+CLUSTER_WINDOW_DAYS = 3
+CLUSTER_MIN_GROUP = 3
 
 
 class CurlResponse:
@@ -612,7 +638,27 @@ def build_chart_payload(ticker: str, measured: list[dict],
         "title": {"text": f"{ticker.upper()} - events overlaid on "
                           f"2y price ({len(events)} events plotted)"},
         "xaxis": {"title": "date", "rangeslider": {"visible": True},
-                  "tickangle": -45},
+                  "tickangle": -45,
+                  "rangeselector": {
+                      "bgcolor": "#ffffff",
+                      "bordercolor": "#e0d8c2",
+                      "borderwidth": 1,
+                      "activecolor": "#c0441f",
+                      "font": {"color": "#4f473a", "size": 11},
+                      "buttons": [
+                          {"count": 1, "label": "1D", "step": "day",
+                           "stepmode": "backward"},
+                          {"count": 7, "label": "1W", "step": "day",
+                           "stepmode": "backward"},
+                          {"count": 1, "label": "1M", "step": "month",
+                           "stepmode": "backward"},
+                          {"count": 6, "label": "6M", "step": "month",
+                           "stepmode": "backward"},
+                          {"count": 1, "label": "1Y", "step": "year",
+                           "stepmode": "backward"},
+                          {"step": "all", "label": "2Y"},
+                      ],
+                  }},
         "yaxis": {"title": "close price"},
         "legend": {"clickmode": "event", "x": 1.01, "xanchor": "left",
                    "orientation": "v"},
@@ -694,14 +740,19 @@ pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:
     line-height:1.5;white-space:pre-wrap;overflow-x:auto}
 ul.notes{margin:8px 0;padding-left:20px}
 ul.notes li{margin:7px 0;line-height:1.5;color:#333}
+.upcoming ul{list-style:none;margin:6px 0 2px;padding:0}
+.upcoming li{margin:8px 0;line-height:1.6}
+.up-type{font-weight:600;color:#c0441f}
+.up-days{font-weight:600;color:#1f883d}
 """
 
 
 def write_report_html(ticker: str, trading_dates: list[dt.date],
                       measured: list[dict], close: pd.Series, stats: dict,
-                      types: list[str], generated_at: str, summary: dict,
-                      verify_blocks: list, data_notes: list[str],
-                      path: str) -> None:
+                      types: list[str], generated_at: str,
+                      summary: dict, verify_blocks: list,
+                      data_notes: list[str], path: str,
+                      upcoming: list[dict], clustering: dict) -> None:
     """Write <ticker>_report.html -- ONE self-contained page containing the
     plain-English summary, the full comparison tables, the interactive price
     chart, the manual verification trace, and the data notes.  Only reuses
@@ -715,6 +766,7 @@ def write_report_html(ticker: str, trading_dates: list[dt.date],
                       for line in summary["bullets"])
     context = html.escape(summary["context"])
     reminder = html.escape(summary["reminder"])
+    clustering_sentences = clustering.get("sentences", [])
 
     verify_parts = []
     for label, lines in verify_blocks:
@@ -754,12 +806,14 @@ Plotly.newPlot('chart', PAYLOAD.traces, PAYLOAD.layout,
         f"<div class=\"sub\">Price range {first} .. {last} (2y) &middot; "
         f"report generated {html.escape(generated_at)} &middot; "
         f"{len(measured)} events collected</div>\n"
+        f"{upcoming_html(upcoming)}\n"
         "<div class=\"box summary\">\n<h2>In plain English</h2>\n"
         f"<ul>{bullets}</ul>\n<p>{context}</p>\n"
         f"<p class=\"reminder\">{reminder}</p>\n</div>\n"
         "<div class=\"box\"><h2>Event-type impact vs random-day baseline "
         f"(threshold: baseline avg + {THRESHOLD_SD:.0f} SD)</h2>\n"
         f"{table_body}\n</div>\n"
+        f"{clustering_html(ticker, clustering, clustering_sentences)}\n"
         "<div class=\"box\"><h2>Price chart with event markers</h2>\n"
         '<div id="controls">\n'
         '<button onclick="setAll(true)">Show all</button>\n'
@@ -903,6 +957,173 @@ def print_plain_language(ticker: str, summary: dict) -> None:
     print(f"\n  One reminder: {summary['reminder']}")
 
 
+# ---------------------------------------------------------------------------
+# upcoming events ("next ... in N days") + event-clustering analysis
+# ---------------------------------------------------------------------------
+def _parse_calendar(iso_list: list[str]) -> list[dt.date]:
+    return [dt.date.fromisoformat(s) for s in iso_list]
+
+
+def _next_future_date(dates: list[dt.date], today: dt.date) -> "dt.date | None":
+    future = [d for d in dates if d >= today]
+    return min(future) if future else None
+
+
+def _days_label(days: "int | None") -> str:
+    if days is None:
+        return "n/a"
+    if days <= 0:
+        return "today"
+    if days == 1:
+        return "in 1 day"
+    return f"in {days} days"
+
+
+def build_upcoming(earnings: list[dict]) -> list[dict]:
+    """Next FUTURE occurrence of each scheduled event type, relative to today.
+
+    Earnings come from yfinance's own earnings calendar (earliest future date;
+    marked "not yet announced" when there is none -- e.g. ETFs have no earnings
+    call).  The Fed / CPI / jobs entries come from the published 2026 schedules
+    above, which are announced well ahead of time, so they carry no caveat.
+    Returns display rows; because earnings_dates only covers a short window,
+    the earnings entry may be None when nothing future is on record."""
+    today = dt.date.today()
+    rows = []
+
+    fut_earnings = sorted(e["date"] for e in earnings if e["date"] >= today)
+    next_e = fut_earnings[0] if fut_earnings else None
+    rows.append({
+        "type": "Earnings",
+        "date": next_e.isoformat() if next_e else None,
+        "days": (next_e - today).days if next_e else None,
+        "source": "yfinance earnings calendar",
+        "note": None if next_e else "no upcoming earnings date on record",
+    })
+
+    fed = _next_future_date(_parse_calendar(FOMC_2026), today)
+    cpi = _next_future_date(_parse_calendar(CPI_2026), today)
+    jobs = _next_future_date(_parse_calendar(JOBS_2026), today)
+    rows.append({"type": "Fed funds rate",
+                 "date": fed.isoformat() if fed else None,
+                 "days": (fed - today).days if fed else None,
+                 "source": "Fed 2026 meeting schedule", "note": None})
+    rows.append({"type": "CPI (inflation)",
+                 "date": cpi.isoformat() if cpi else None,
+                 "days": (cpi - today).days if cpi else None,
+                 "source": "BLS 2026 release schedule", "note": None})
+    rows.append({"type": "Jobs report",
+                 "date": jobs.isoformat() if jobs else None,
+                 "days": (jobs - today).days if jobs else None,
+                 "source": "BLS 2026 release schedule", "note": None})
+    return rows
+
+
+def cluster_analysis(measured: list[dict]) -> dict:
+    """Split each event type's measured occurrences into 'isolated' (no other
+    measured event within +/- CLUSTER_WINDOW_DAYS days) vs 'clustered', then
+    compare their average |next-day move|.  Only reports a verdict when BOTH
+    groups hold >= CLUSTER_MIN_GROUP occurrences -- the historical samples are
+    small, and comparing a handful of events either way would be noise."""
+    evs = [m for m in measured if m["base_date"] is not None and m["r1"] is not None]
+    groups: dict[str, dict[str, list[float]]] = {}
+    for i, m in enumerate(evs):
+        nearby = any(
+            j != i and abs((evs[j]["base_date"] - m["base_date"]).days)
+            <= CLUSTER_WINDOW_DAYS
+            for j in range(len(evs)))
+        bucket = groups.setdefault(m["type"], {"isolated": [], "clustered": []})
+        bucket["clustered" if nearby else "isolated"].append(abs(m["r1"]))
+
+    rows = []
+    for t in sorted(groups):
+        iso, cl = groups[t]["isolated"], groups[t]["clustered"]
+        n_iso, n_cl = len(iso), len(cl)
+        avg_iso = sum(iso) / n_iso if n_iso else None
+        avg_cl = sum(cl) / n_cl if n_cl else None
+        if n_iso >= CLUSTER_MIN_GROUP and n_cl >= CLUSTER_MIN_GROUP and avg_iso:
+            ratio = avg_cl / avg_iso
+            if ratio >= 1.3:
+                verdict = "bigger when clustered"
+            elif ratio <= 0.7:
+                verdict = "smaller when clustered"
+            else:
+                verdict = "no clear difference"
+        else:
+            verdict = "not enough data"
+        rows.append({"type": t, "avg_isolated": avg_iso, "avg_clustered": avg_cl,
+                     "n_isolated": n_iso, "n_clustered": n_cl, "verdict": verdict})
+    return {"window_days": CLUSTER_WINDOW_DAYS, "min_per_group": CLUSTER_MIN_GROUP,
+            "rows": rows}
+
+
+def clustering_summary(ticker: str, clustering: dict) -> list[str]:
+    """Plain-English sentences for the clustering table (shared with the HTML
+    report and the JSON payload, exactly like plain_language_summary)."""
+    sides = {
+        "bigger when clustered": ("a BIGGER price reaction than when that event "
+                                  "type lands on its own"),
+        "smaller when clustered": ("a SMALLER price reaction than when that "
+                                   "event type lands on its own"),
+        "no clear difference": "no clear difference from when it lands on its own",
+    }
+    enough = [r for r in clustering["rows"] if r["verdict"] != "not enough data"]
+    if not enough:
+        return [f"There isn't enough clustered-event data for {ticker.upper()} yet to "
+                "say whether events landing close together move the price more. "
+                "Each event type needs at least a few isolated AND a few clustered "
+                "occurrences to compare fairly, and most types only have a handful "
+                "of each."]
+    out = []
+    for r in enough:
+        out.append(
+            f"When {ticker.upper()}'s {_friendly(r['type'])} land within "
+            f"{clustering['window_days']} days of another event, the day-after move "
+            f"averages {r['avg_clustered'] * 100:.1f}% vs {r['avg_isolated'] * 100:.1f}% "
+            f"for those that happened on their own (n={r['n_clustered']} vs "
+            f"n={r['n_isolated']}) -- that's {sides[r['verdict']]}.")
+    return out
+
+
+def upcoming_html(upcoming: list[dict]) -> str:
+    items = []
+    for r in upcoming:
+        if r["date"]:
+            dates = (f"<b>{r['date']}</b> &middot; <span class='up-days'>"
+                     f"{_days_label(r['days'])}</span>")
+        else:
+            dates = "<span class='dim'>not announced yet</span>"
+        note = (f" <span class='hint'>({r['note']})</span>" if r["note"]
+                else f" <span class='hint'>{r['source']}</span>")
+        items.append(f"<li><span class='up-type'>{r['type']}</span> &mdash; "
+                     f"{dates}{note}</li>")
+    return ("<div class='box upcoming'><h2>Up next (countdown)</h2><ul>"
+            + "".join(items) + "</ul></div>")
+
+
+def clustering_html(ticker: str, clustering: dict, sentences: list[str]) -> str:
+    head = "".join(f"<p class='hint'>{html.escape(s)}</p>" for s in sentences)
+    rows = []
+    for r in clustering["rows"]:
+        ai = "--" if r["avg_isolated"] is None else f"{r['avg_isolated'] * 100:.2f}%"
+        ac = "--" if r["avg_clustered"] is None else f"{r['avg_clustered'] * 100:.2f}%"
+        verdict = html.escape(r["verdict"])
+        rows.append(
+            "<tr><td>%s</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td>"
+            "<td class='%s'>%s</td></tr>"
+            % (html.escape(r["type"]), ai, ac, r["n_isolated"], r["n_clustered"],
+               ("" if r["verdict"] == "not enough data" else "verdict-above"
+                if "bigger" in r["verdict"] else "verdict-below"
+                if "smaller" in r["verdict"] else ""), verdict))
+    return ("<div class='box'><h2>Does event clustering matter? (another event "
+            f"within {clustering['window_days']} days)</h2>{head}"
+            "<table><thead><tr><th>event type</th>"
+            "<th>isolated avg |r1|</th><th>clustered avg |r1|</th>"
+            "<th>n (isolated)</th><th>n (clustered)</th>"
+            "<th>verdict</th></tr></thead><tbody>"
+            + "".join(rows) + "</tbody></table></div>")
+
+
 def json_report(ticker: str, trading_dates: list[dt.date],
                 measured: list[dict], close: pd.Series, stats: dict,
                 types: list[str], generated_at: str,
@@ -910,7 +1131,8 @@ def json_report(ticker: str, trading_dates: list[dt.date],
                 data_notes: list[str], pool_r1: pd.Series,
                 base_abs_mu_r1: float, base_abs_sd_r1: float,
                 base_abs_med_r1: float, base_abs_mu_r3: float,
-                base_abs_med_r3: float) -> dict:
+                base_abs_med_r3: float, upcoming: list[dict],
+                clustering: dict) -> dict:
     """Everything the HTML report renders, as one JSON-serializable dict
     (used by the --json CLI mode / web app; nothing is written to disk)."""
     traces, layout = build_chart_payload(ticker, measured, close)
@@ -941,6 +1163,8 @@ def json_report(ticker: str, trading_dates: list[dt.date],
                          for label, lines in verify_blocks],
         "notes": data_notes,
         "events": [_serialize_event(m) for m in measured],
+        "upcoming": upcoming,
+        "clustering": clustering,
     }
 
 
@@ -991,6 +1215,14 @@ def run(ticker: str, json_mode: bool = False) -> None:
     macro = build_macro_events(start)
     print(f"      macro releases : {len(macro)}")
     events = earnings + news + macro
+
+    # forward-looking countdown (verified: every date must be in the future)
+    upcoming = build_upcoming(earnings)
+    today = dt.date.today()
+    print(f"      upcoming (relative to today, {today}):")
+    for r in upcoming:
+        d = r["date"] or "not announced yet"
+        print(f"        {r['type']:<18} {d}  ({_days_label(r['days'])})")
     if not events:
         print(f"  [error] no events found for {ticker}. aborting.")
         sys.exit(1)
@@ -1121,6 +1353,27 @@ def run(ticker: str, json_mode: bool = False) -> None:
           "          'mdn |r|' is the median absolute return (the 'middle' move); the median\n"
           "          is less inflated by a few extreme days than the mean.")
 
+    # --- event clustering ---------------------------------------------------
+    clustering = cluster_analysis(measured)
+    clustering_sentences = clustering_summary(ticker, clustering)
+    clustering["sentences"] = clustering_sentences
+    print(f"\n[3b] Does event clustering matter? (another event within "
+          f"{CLUSTER_WINDOW_DAYS} days of an event, before or after)")
+    hdr = (f"\n  {'event type':<18}{'isolated avg |r1|':>18}"
+           f"{'clustered avg |r1|':>18}{'n(iso)':>8}{'n(cl)':>8}  verdict")
+    print(hdr)
+    print("  " + "-" * (len(hdr) - 2))
+    for r in clustering["rows"]:
+        ai = ("--" if r["avg_isolated"] is None
+              else f"{r['avg_isolated'] * 100:>8.2f}%")
+        ac = ("--" if r["avg_clustered"] is None
+              else f"{r['avg_clustered'] * 100:>8.2f}%")
+        print(f"  {r['type']:<18}{ai:>18}{ac:>18}{r['n_isolated']:>8}"
+              f"{r['n_clustered']:>8}  {r['verdict']}")
+    print("  " + "-" * (len(hdr) - 2))
+    for s in clustering_sentences:
+        print(f"  - {s}")
+
     # --- manual verification ------------------------------------------------
     print("\n[4] Manual verification against raw close prices")
     ver = [m for m in mie if m["r1"] is not None]
@@ -1144,6 +1397,7 @@ def run(ticker: str, json_mode: bool = False) -> None:
     # --- outputs ------------------------------------------------------------
     summary = plain_language_summary(ticker, types, stats,
                                      base_abs_mu_r1, base_abs_med_r1)
+    summary["bullets"].extend(clustering_sentences)
     noticed = [m for m in measured if m["base_date"] is None]
     data_notes = [
         ("Prices: Yahoo Finance daily closes over the 2-year window, "
@@ -1157,6 +1411,11 @@ def run(ticker: str, json_mode: bool = False) -> None:
          f"sd {base_abs_sd_r1 * 100:.2f}%), 3-day avg |move| "
          f"{base_abs_mu_r3 * 100:.2f}% (median {base_abs_med_r3 * 100:.2f}%)."),
         realized_note,
+        ("Event clustering: an event counts as 'clustered' when another "
+         f"measured event lands within {CLUSTER_WINDOW_DAYS} days before or after "
+         f"it; the isolated vs clustered next-day moves are only compared when "
+         f"both groups hold at least {CLUSTER_MIN_GROUP} occurrences, otherwise "
+         "the row says 'not enough data'."),
         ("Legend: r1 = return from event-day close to next trading-day close; "
          "r3 = return over the following 3 trading days; 'control' = same-size "
          "random sample of ordinary days; 'mdn |r|' = median absolute return "
@@ -1183,7 +1442,7 @@ def run(ticker: str, json_mode: bool = False) -> None:
                              types, generated_at, summary, verify_blocks,
                              data_notes, pool_r1, base_abs_mu_r1,
                              base_abs_sd_r1, base_abs_med_r1, base_abs_mu_r3,
-                             base_abs_med_r3)
+                             base_abs_med_r3, upcoming, clustering)
         sys.stdout = real_stdout
         print(json.dumps(result, ensure_ascii=False))
         return
@@ -1196,7 +1455,7 @@ def run(ticker: str, json_mode: bool = False) -> None:
     write_csv(measured, csv_path)
     write_report_html(ticker, trading_dates, measured, close, stats, types,
                       generated_at, summary, verify_blocks, data_notes,
-                      report_path)
+                      report_path, upcoming, clustering)
     print("\n[5] Outputs written:")
     print(f"      event log : {csv_path}  ({len(measured)} events)")
     print(f"      report    : {report_path}  (open in a browser - everything is in here)")
